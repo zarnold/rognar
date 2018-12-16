@@ -28,4 +28,20 @@ export default class Tracer {
 
         )
     };
+
+    error(msg) {
+        if (!DEBUG_MODE) return;
+        if(!this.active) return;
+        console.error(`${this.name} : ${msg}`
+
+        )
+    };
+
+    display(obj,msg="") {
+        if (!DEBUG_MODE) return;
+        if(!this.active) return;
+        console.log(`*******************************   ${this.name}`)
+        console.log(`** ${msg}`)
+        console.dir(obj)
+    }
 }
