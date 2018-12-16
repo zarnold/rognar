@@ -1,5 +1,62 @@
 #main {
     height: 95vh;
     width: 95vw;
+    display: flex;
+    flex-direction: row ;
     border: 1px solid #333;
 }
+
+.window {
+    background-color: aquamarine;
+    margin: 5px;
+    border : 1px dashed #333;
+}
+
+#screen {
+    display: flex;
+    flex-direction: column ;
+    order :0;
+    flex: 2
+}
+
+#menu {
+    order: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column ;
+}
+
+#sheet {
+ flex:1;
+}
+
+#stage {
+    flex: 2;
+}
+
+#dialog {
+    flex: 1;
+}
+
+
+@media screen and (min-width: 600px){
+    #main {
+        flex-direction: row;
+    }
+  }
+  
+  @media screen and (max-width: 600px){
+    #main {
+        flex-direction: column;
+    }
+
+    #menu {
+        order: 0;
+        flex: 1;
+    }
+
+    #screen {
+        order :1;
+        flex: 8;
+    }
+  }
