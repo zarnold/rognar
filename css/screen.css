@@ -39,24 +39,19 @@
 }
 
 
-@media screen and (min-width: 600px){
-    #main {
-        flex-direction: row;
-    }
-  }
-  
-  @media screen and (max-width: 600px){
-    #main {
-        flex-direction: column;
-    }
 
-    #menu {
-        order: 0;
-        flex: 1;
-    }
+@media screen and (max-width: 600px){
+#main {
+    flex-direction: column;
+}
 
-    #screen {
-        order :1;
-        flex: 8;
-    }
-  }
+#menu {
+    order: 0;
+    flex: 1;
+}
+
+#screen {
+    order :1;
+    flex: 8;
+}
+}
