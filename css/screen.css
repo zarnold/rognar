@@ -32,6 +32,9 @@
 
 #stage {
     flex: 2;
+    display: flex;
+    flex-direction: row ;
+    align-items: flex-end;
 }
 
 #speechBox {
