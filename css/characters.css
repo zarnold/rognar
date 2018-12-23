@@ -1,0 +1,11 @@
+.portrait {
+  border: black solid 1px;
+  order: 0;
+  height: 363px;
+  width:250px;
+}
+
+#diver-card {
+  background-image: url("../img/sprites/characters/diver.jpg");
+  background-position: 0px 0px;
+}
