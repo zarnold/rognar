@@ -4,8 +4,8 @@
  * A Lib for managing Speech
  */
 
-'use strict';
-import Tracer from './debug.js';
+"use strict";
+import Tracer from "./debug.js";
 
 export const portraitSize = 250;
 
@@ -14,15 +14,15 @@ export const moodValues = {
     "ANGRY": 1,
     "FRIGHTENED": 2,
     "DIZZY": 3
-}
+};
 
 
 export default class Character {
 
-    constructor(targetEl, characClass = 'diver') {
+    constructor(targetEl, characClass = "diver") {
         this.dbg = new Tracer("Character");
         this.dbg.unmute();
-        this.dbg.info(`Loading New Character`);
+        this.dbg.info("Loading New Character");
         this.character = characClass;
 
 
@@ -31,7 +31,7 @@ export default class Character {
 
         if (parent) {
             this.parent = parent;
-            this.parent.classList.add('portrait');
+            this.parent.classList.add("portrait");
             this.parent.style.backgroundPosition = " 0px 0px";
             this.parent.style.backgroundImage = `url("../img/sprites/characters/${characClass}.png")`;
         }
@@ -40,13 +40,13 @@ export default class Character {
             this.parent = null;
         }
 
-        this.mood=moodValues["NORMAL"];
+        this.mood = moodValues["NORMAL"];
     }
 
     set mood(newMood) {
         let offset = -1 * portraitSize * newMood;
         this.parent.style.backgroundPosition = `${offset}px 0px`;
     }
-    
+
 
 }
