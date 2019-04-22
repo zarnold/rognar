@@ -163,7 +163,7 @@ Even if reduced :
 
 Next part it the tricky part. Positionning element in CSS has alway been a pain in the ass but thx to recent evolution, you can now use something call flexbox ( note to coder : I DO prefer flexbox to grid system).
 
-With flex box syntax, "all" you have to do is tellign to your browser that some element contains other elemnts whom position is flexible. All you do then is describing the order and teh relative siez of each element inside.
+With flex box syntax, "all" you have to do is telling to your browser that some elements contain other elements whom position is flexible. All you do then is describing the ordering and the relative size of each element inside.
 Here my flex containers are :
 
 -the main window
@@ -171,7 +171,7 @@ Here my flex containers are :
 - the screen  that contains the section (portrait and background )   and the footer (speech box)
 - the aside character sheet
 
-Note that an element can be both felx container and flex item. For each flex item, I do provide the order and the relative width :
+Note that an element can be both flex container and flex item. For each flex item, I do provide the order and the relative width :
 
 ```css
 
