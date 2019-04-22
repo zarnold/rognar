@@ -166,7 +166,7 @@ Next part it the tricky part. Positionning element in CSS has alway been a pain 
 With flex box syntax, "all" you have to do is telling to your browser that some elements contain other elements whom position is flexible. All you do then is describing the ordering and the relative size of each element inside.
 Here my flex containers are :
 
--the main window
+- the main window
 - the so called screen
 - the screen  that contains the section (portrait and background )   and the footer (speech box)
 - the aside character sheet
