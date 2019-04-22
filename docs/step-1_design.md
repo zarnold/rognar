@@ -33,7 +33,7 @@ I just put the element I think I need for my game. There are :
 - a window with info about the player among others the current skills and the current status
 
 Seems enough for a basic game.
-See [3- Coding UX](step-3_coding_ux) for implémentation !
+See [3- Coding UX](step-3_coding_ux.md) for implémentation !
 
 ## Function
 
