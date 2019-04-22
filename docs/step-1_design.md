@@ -24,6 +24,17 @@ Yet, talking with nightmare creature is not without consequences and you can suf
 
 ![wireframe](./image/wireframe.png)
 
+The UX is quite basic and functionnal here because I'm not an UX designer.
+I just put the element I think I need for my game. There are :
+
+- the main  window. It displays a background and the creature portrait
+- a text part that display the text said by the creature ( note that there is no scroll to past text yet.)
+- a window with the choice offered to the player. Obviously clicking on a link has some effect and lead to another part of the dialogue tree
+- a window with info about the player among others the current skills and the current status
+
+Seems enough for a basic game.
+See [3- Coding UX](step-3_coding_ux) for implémentation !
+
 ## Function
 
 # Next

@@ -3,7 +3,7 @@ import Tracer from "./modules/debug.js";
 import Writer from "./modules/dialogLib.js";
 import Character from "./modules/characSprite.js";
 import { portraitSize,moodValues } from  "./modules/characSprite.js";
-
+/*
 var mainDbg = new Tracer("main");
 mainDbg.unmute();
 mainDbg.info("Starting");
@@ -36,3 +36,4 @@ window.setTimeout(function() {
         }, 500);
     }, 500);
 }, 500);
+*/
