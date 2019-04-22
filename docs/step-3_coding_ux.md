@@ -110,7 +110,7 @@ Ok. We got our elements now let's style and position them. You need to link a cs
     <meta charset="utf-8">
 
     <title>Rognar</title>
-    <meta name="description" content="A javscript Roguelike game">
+    <meta name="description" content="A javascript Roguelike game">
     <meta name="author" content="arnold">
 
     <link rel="stylesheet" href="css/screen.css">
@@ -140,7 +140,8 @@ main {
 
 ## Sizing
 
-For this kind of app, I like the UX always be the same size, so I use vh (view height) and vw (view width) to define size :
+For this kind of app, I like the UX always be the same size and fill the whole screen, so that it looks fine when displayed full screen.
+For this,  I use vh (view height) and vw (view width) to define size :
 
 ```css
 main {
