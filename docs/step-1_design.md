@@ -37,6 +37,13 @@ See [3- Coding UX](step-3_coding_ux.md) for implémentation !
 
 ## Function
 
+- status affect the main screen display with css filter
+- some dialogue options only appear on screencheck
+- when I make a choice, it :
+  - affect my status
+  - improve my skills
+  - go to the next talk
+  
 # Next
 
 [2- Specifying](step-2_specifying.md)

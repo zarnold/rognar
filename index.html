@@ -1,5 +1,3 @@
-<!doctype html>
-
 <html lang="fr">
 
 <head>
@@ -10,24 +8,60 @@
     <meta name="author" content="arnold">
 
     <link rel="stylesheet" href="css/screen.css">
-    <link rel="stylesheet" href="css/characters.css">
 
 </head>
 
 <body>
 
-    <div id="main">
+    <main>
         <div id="screen">
-            <div id="stage" class="window"><div id="character-card"></div></div>
+            <section class="window">
+                <div id="character-card">
+                    <div>Portrait</div>
+                </div>
+            </section>
 
-            <div id="speechBox" class="window"><a href="#"></a></div>
+            <footer class="window">
+                <div id="creature-speech">Creature Speech</div>
+                <nav id="player-choices">
+                    <ul>
+                        <li>You fool !</li>
+                        <li>and what about this ?</li>
+                        <li>I like it too</li>
+                        <li>Oh ? Really ?</li>
+                    </ul>
+                </nav>
+                </fotter>
         </div>
-        <div id="menu">
-            <div id="sheet" class="window"> Character sheet</div>
-        </div>
-    </div>
+        <aside class="window">
+           
+            <div id="skill-list" class="window">
+                <h2>Skills</h2>
+                <dl>
+                    <dt>Intelligence</dt>
+                    <dd>15</dd>
+                    <dt>Diplomacy</dt>
+                    <dd>8</dd>
+                    <dt>Knowledge</dt>
+                    <dd>12</dd>
+                </dl>
+            </div>
+            <div id="status-list" class="window">
+                <h2>Status</h2>
+                <dl>
+                    <dt>Anger</dt>
+                    <dd>19</dd>
+                    <dt>Emptiness</dt>
+                    <dd>14</dd>
+                    <dt>Angst</dt>
+                    <dd>6</dd>
+                </dl>
+            </div>
+
+        </aside>
+    </main>
 
 </body>
-<script src="./main.js" type="module"></script>
+
 
 </html>
