@@ -9,6 +9,7 @@ mainDbg.unmute();
 mainDbg.info("Starting");
 mainDbg.info(`Portrait size is ${portraitSize}px`);
 mainDbg.info(moodValues.NORMAL);
+
 async function play(writer) {
     await writer.load("./data/dialog_1.json");
     let nextStatus = await writer.playSpeech();
