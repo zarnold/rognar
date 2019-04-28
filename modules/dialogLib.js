@@ -34,29 +34,34 @@ export default class Writer {
 
     update(speech, choices) {
         
+
+        // Get the Creature speech element and the player choice list
         let hdr = this.target.querySelector("#creature-speech");
         let chc = this.target.querySelector("#player-choice");  
         let  newContent;
 
-        //Empty them
+        // First empty them
+        // faster way seems to clone the node without cloning its children
+        
         let cNode ;
-
         cNode = hdr.cloneNode(false);     
         hdr.parentNode.replaceChild(cNode ,hdr);
-          
         cNode = chc.cloneNode(false);    
         chc.parentNode.replaceChild(cNode ,chc);
 
 
+        // Then add the speech
+        // do not forget to get the reference again as it has changed when cloning
         hdr = this.target.querySelector("#creature-speech");
         newContent= document.createTextNode(speech); 
         hdr.appendChild(newContent);  
 
         chc = this.target.querySelector("#player-choice");  
+
+        // Add an li for each options
         choices.forEach(function(el) {
             let l = document.createElement('li');        
             newContent= document.createTextNode(el); 
-
             l.appendChild(newContent);
             chc.appendChild(l);  
         });

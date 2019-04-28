@@ -2,7 +2,7 @@
 
 Dialogue system is heart of the game. 
 
-As specified in the [design of the gam](step-1_design.md), the dialogue engine should provide this features :
+As specified in the [design of the game](step-1_design.md), the dialogue engine should provide this features :
 
 - For each step, there are many choice offered
 - A choice leads to another steps
@@ -90,7 +90,7 @@ First, create the element you need :
 ```
 
 And then add an update method that... well... update the dialog tree.
-Remember that an dialog step is ONE header and A LIST of choices. So its parameters should reflect this.
+Remember that a dialogue step is ONE header and A LIST of choices. So its parameters should reflect this : 
 
 ```javascript
     update(speech, choices) {
@@ -174,6 +174,12 @@ function newText() {
 }
 
 newText();
+```
+Note than you can put a dialog in any windo you want :
+
+```javascript
+let Homer = new Writer("dialog-window");
+let Joyce = new Writer("another-dialog");
 ```
 
 ## Step 1 : Load real dialog tree and make it interactiv

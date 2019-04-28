@@ -4,7 +4,7 @@ import Writer from "./modules/dialogLib.js";
 
 
 let Homer = new Writer("dialog-window");
-
+let Joyce = new Writer("another-dialog");
 
 let tree = [
     {
@@ -29,6 +29,7 @@ var i = 0;
 
 function newText() {
     Homer.update(tree[i]["speech"], tree[i]["choices"]);
+    Joyce.update(tree[i]["speech"], tree[i]["choices"]);
     if( i < tree.length) {
         i++;
         setTimeout(newText, 2000);
@@ -36,3 +37,6 @@ function newText() {
 }
 
 newText();
+
+
+
