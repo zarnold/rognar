@@ -261,5 +261,5 @@ It is still a little big but anyway, we're gonna solve this later when dealing w
 
 # Next
 
-Ok. Seems good. Let's continue to [The Nex part](part_4.md)
+Ok. Seems good. Let's continue to [The Next part](part_4.md)
 
