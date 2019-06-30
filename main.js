@@ -1,10 +1,13 @@
 "use strict";
 
 import Writer from "./modules/dialogLib.js";
+import Scenery from "./modules/Scenery.js";
 
 
 let Homer = new Writer("dialog-window");
-let Joyce = new Writer("another-dialog");
+let level_1 = new Scenery("scene");
+
+level_1.scene = "./img/backgrounds/room/lba-room.jpg";
 
 let tree = [
     {
@@ -29,7 +32,7 @@ var i = 0;
 
 function newText() {
     Homer.update(tree[i]["speech"], tree[i]["choices"]);
-    Joyce.update(tree[i]["speech"], tree[i]["choices"]);
+
     if( i < tree.length) {
         i++;
         setTimeout(newText, 2000);
