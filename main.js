@@ -11,20 +11,20 @@ level_1.scene = "./img/backgrounds/room/lba-room.jpg";
 
 let tree = [
     {
-        speech : "Show me your favorite stance", 
-        choices : ["Use di dance", "rub a dub", "Give him the tempo"]
+        speech : "The background with night effects", 
+        choices : ["Tell something", "tell another thing", "dont tell anything"]
     },
     {
-        speech : "I'm on the rock", 
-        choices : ["I check a stock", "I'm on the run"]
+        speech : "Hallucination ensue !", 
+        choices : ["Oh my g**", "I'm on the run"]
     },
     {
-        speech : "When she walks", 
-        choices : ["She's like a samba", "she swings so cool", "She sways so gentle","Each one she passes goes Ha","She looks straight ahead"]
+        speech : "Ouf evrything is back to normal", 
+        choices : ["Make a prayer", "scream", "Ask for help","Roll  over the Floor and laugh","Leave"]
     },
     {
-        speech : "Se você disser que eu desafino", 
-        choices : ["Saiba que isso em mim provoca imensa dor", "Se você insisted em classificar"]
+        speech : "Last choice", 
+        choices : ["dont do anything", "do anything"]
     }
 ]
 
@@ -36,6 +36,10 @@ function newText() {
     if( i < tree.length) {
         i++;
         setTimeout(newText, 2000);
+
+        if(i==1) level_1.nigthScope();
+        if(i==2) level_1.hallucination();
+        if(i==3) level_1.removeEffect();
     }
 }
 

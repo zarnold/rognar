@@ -1,15 +1,14 @@
-# List Of Things To Do
+# Purpose 
+# Tutorials 
 
- - make sprite Class with css class for emotin (tile background )
- - bind dialog tree to html element 
+- [1- Designing ](docs/step-1_design.md)
+- [2- Specifying ](docs/step-2_specifying.md)
+- [3- Coding UX ](docs/step-3_coding_ux.md)
+- [4- Dialog Tree ](docs/step-4_dialogue_tree.md)
+- [5- Character and background ](docs/step-5_character_and_background.md)
+.
 
- ## On Going
-  - code dialog tree Class
-    - must  click on speech branch
-    - must change the visual status of the charac and ennemy
-    - must end the talk with a status
-    - must update characs
+ ## Setting up
 
- ## Bugs 
- ## New Features
+ ## Makign own game
  
