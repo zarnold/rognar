@@ -1,6 +1,6 @@
 # Coding scene screen
 
-One of interesting element of an RPG is graphical backgroud and NPC portrait taht react accordingly to their emotion or player speech.
+One of interesting element of an RPG is graphical backgroud and NPC portrait that react accordingly to their emotion or player speech.
 
 Lets code it.
 
