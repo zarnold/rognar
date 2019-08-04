@@ -44,6 +44,3 @@ See [3- Coding UX](step-3_coding_ux.md) for implémentation !
   - improve my skills
   - go to the next talk
   
-# Next
-
-[2- Specifying](step-2_specifying.md)

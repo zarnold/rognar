@@ -258,8 +258,3 @@ Now, when viewing on smaller screen, the character sheet is stacked on top of th
 
 It is still a little big but anyway, we're gonna solve this later when dealing with UI graphics and styling. Yet, I do just care about positionning my element.
 
-
-# Next
-
-Ok. Seems good. Let's continue to [The Next part](part_4.md)
-
