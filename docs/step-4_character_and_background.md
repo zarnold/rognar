@@ -14,7 +14,7 @@ I want a new object (class) with at least this methods :
 - change the side and orientation of the portrait ( in order to display it to the left or the right of the scene)
 - maybe apply some effect in animation in order to show some transition
 
-CSS provide convenient function to do that so most of the job is to bind some javascript method over this. Of course my new character class and background class must allo to put scene in any html element.
+CSS provide convenient function to do that so most of the job is to bind some javascript method over this. Of course my new character class and background class must allow to put scene in any html element.
 
 ## Create a new background
 
