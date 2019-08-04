@@ -151,3 +151,191 @@ Do not forget to write a remove effect function :
 ```javascript
 level_1.removeEffect()
 ```
+
+## Adding character with emotions
+
+Next thing I need is kinda character class that can express emotion. In order to keep production budjet low, we gonna use statics portraits that show different emotion.
+
+A way to do that, and a good one because you reduce overhead for loading assets, is to use sprite sheet. A sprite sheet is an image, a png file for example, that contains all of the sprite needed on one image but with different coordinates.
+
+It looks like this :
+
+![l'heroine de thorn](./image/lba.png)
+
+(it's only a mockup so the emotion name are not the one shown )
+The most important thing to watch is that my image is 4 image of 335 px width. Thus, by adding n*335px, I get a different emotion.
+
+if n=0, I got normal emotion, if n=1 I got sadness, if n=2 I got dizzyness, etc...
+
+Let's code it 
+
+### New character class
+
+Add an html element to hold our character inside the scene :
+
+```html
+            <section id="scene" class="window">
+                <div id="character-card"></div>
+            </section>
+```
+
+And create a character class.
+
+
+First, define some constant used for managing portrait :
+
+```javascript
+
+export const portraitWidth = 335;
+export const portraitHeight = 310;
+
+export const moodValues = {
+    "NORMAL": 0,
+    "SAD": 1,
+    "DIZZY": 2,
+    "ANGRY": 3
+};
+
+```
+
+See how I map human readable values to integer. It does not serve any function for the game but it's way much readable for coder later. Remember : always map your enums ( that's the name of this technic ) to human readable variable (note : in some language like C there is enum keywords, not in javascript ).
+
+Then create your class and constructor so that your spritesheet is attached to your target HTML element. 
+Here I decide that my element fit the size of my portrait image but you could do it anotherway.
+
+```javascript
+export default class Character {
+
+    constructor(targetEl, characClass = "diver") {
+        this.dbg = new Tracer("Character");
+        this.dbg.unmute();
+        this.dbg.info("Loading New Character");
+        this.character = characClass;
+
+
+        let parent = document.getElementById(targetEl);
+
+        if (parent) {
+            this.parent = parent;
+            this.parent.classList.add("portrait");
+            this.parent.style.backgroundPosition = " 0px 0px";
+            this.parent.style.width=`${portraitWidth}px`;
+            this.parent.style.height=`${portraitHeight}px`;
+            this.parent.style.marginLeft="auto";
+            this.parent.style.marginRight="0px";
+            this.parent.style.backgroundImage = `url("../img/sprites/characters/${characClass}.png")`;
+        }
+        else {
+            this.dbg.error("No element exist for sprite placement");
+            this.parent = null;
+        }
+
+        this.mood = "NORMAL";        
+    }
+
+
+}
+```
+
+Check that it fits the way you like in every screen size :
+
+*normal*
+
+![normal](./image/ch1.png)
+
+*mobile*
+
+![mobile](./image/ch2.png)
+
+*dumb*
+
+![dumb](./image/ch3.png)
+
+And then call it in your main !
+
+```javascript
+let Lba = new Character("character-card","lba"); 
+```
+
+Here, I choose to use the character name as way to get the spritesheet, so the spritescheet must be named "<CHARACTER-NAME>.png" but we coulda built a more powerful system, with an associative array with several fields, etc...
+
+But keep it simple if it works.
+
+### Changing the mood
+
+By using a sprite sheet, it's very easy to change the portrait when the mood is set just by changing the offset :
+
+```javascript
+
+    set mood(newMood) {
+        let moodIdx = moodValues[newMood];
+
+        if (!moodIdx) moodIdx=0;
+        
+        let offset = -1 * portraitWidth * moodIdx;
+        this.parent.style.backgroundPosition = `${offset}px 0px`;
+    }
+```
+
+Thus, changing the portrait is just a matter of assigning the mood in the main thread :
+
+```javascript
+document.onkeypress = function (e) {
+    e = e || window.event;
+   
+    if (e.key==="a") Lba.mood="NORMAL";
+    if (e.key==="z") Lba.mood="SAD";
+    if (e.key==="e") Lba.mood="ANGRY";
+    if (e.key==="r") Lba.mood="DIZZY";
+
+    if (e.key==="q") level_1.nigthScope();
+    if (e.key==="s") level_1.hallucination();
+    if (e.key==="d") level_1.removeEffect();
+};
+```
+
+You can change the side of the portrait too :
+
+```javascript
+    set focus(side)
+    {
+        if(side==="left") {
+            this.parent.style.transform="scaleX(-1)";
+            this.parent.style.marginRight="auto";
+            this.parent.style.marginLeft="0px";
+        } else {
+            this.parent.style.transform="scaleX(1)";
+            this.parent.style.marginLeft="auto";
+            this.parent.style.marginRight="0px";
+        }
+    }
+```
+
+and test combination of changing mood and changing side : 
+
+```javascript
+    if (e.key==="w") Lba.focus="left";
+    if (e.key==="x") Lba.focus="right";
+```
+
+*Different combination of mood and side*
+
+
+![normal](./image/m1.png)
+
+![normal](./image/m2.png)
+
+![normal](./image/m3.png)
+
+And at last, add show and hide method, to manage many character :
+
+
+```javascript
+    hide() {
+        this.parent.style.display="none";
+    }
+
+    show() {
+        this.parent.style.display="block";        
+    }
+```

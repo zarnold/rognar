@@ -2,7 +2,7 @@
 
 import Writer from "./modules/dialogLib.js";
 import Scenery from "./modules/Scenery.js";
-
+import Character from "./modules/characSprite.js";
 
 let Homer = new Writer("dialog-window");
 let level_1 = new Scenery("scene");
@@ -30,20 +30,38 @@ let tree = [
 
 var i = 0;
 
+
+let Lba = new Character("character-card","lba"); 
+
+
 function newText() {
     Homer.update(tree[i]["speech"], tree[i]["choices"]);
 
     if( i < tree.length) {
         i++;
         setTimeout(newText, 2000);
-
-        if(i==1) level_1.nigthScope();
-        if(i==2) level_1.hallucination();
-        if(i==3) level_1.removeEffect();
     }
 }
 
 newText();
 
+document.onkeypress = function (e) {
+    e = e || window.event;
+   
+    if (e.key==="a") Lba.mood="NORMAL";
+    if (e.key==="z") Lba.mood="SAD";
+    if (e.key==="e") Lba.mood="ANGRY";
+    if (e.key==="r") Lba.mood="DIZZY";
 
+    if (e.key==="q") level_1.nigthScope();
+    if (e.key==="s") level_1.hallucination();
+    if (e.key==="d") level_1.removeEffect();
+
+    if (e.key==="w") Lba.focus="left";
+    if (e.key==="x") Lba.focus="right";
+
+
+    if (e.key==="b") Lba.hide();
+    if (e.key==="n") Lba.show();
+};
 
