@@ -322,6 +322,114 @@ and of course, add a property to maintain the current choice :
 
 ```
 
+Now we can implement it. Our dialog tree parser has to do something like that :
+
+```
+LOAD DIALOG TREE
+SET  DIALOG TO FIRST TALK
+WHILE DISCUSSION IS NOT FINISHED
+  WAIT FOR PLAYER CHOICE
+  ( apply player choice consequences)
+  GO TO PLAYER CHOICE NEXT TALK
+```
+
+That could be implement this way :
+
+**In DialogLib module : **
+
+```javascript
+    const _loadDialogTree = async function () {
+        return await new Promise(function (res, rej) {
+            res("my Dialogue Tree");
+        });
+
+    };
+
+    [...]
+
+    async runNewDialog(pathToDialogTree) {
+
+        // Reset 
+        this.alreadyReadChoices = [];
+        this.dialogTree = await _loadDialogTree(pathToDialogTree);
+        return 0;
+    }
+
+
+```
+
+**In main.js**
+
+```javascript
+async function play() {
+    await Homer.runNewDialog("pathToData");
+
+    console.log("Homer dialog tree is");
+    console.dir(Homer.dialogTree);
+}
+
+play();
+```
+
+Before diving further into implementation, let's stop a moment to talk about a difficult concept : asynchonicity.
+
+#### Asynchronicity
+
+Some operation and function resolve fast enough  to consider them synchronous, that is you get the result the same moment you ask for it ( not totally true dur to execution time but whatever ).
+
+But some other operation are so long that you dont get your result when you ask it. For example you could ask to a human user the result of an addition and get the result few seconds later, because an human process operation slower. 
+Or it could be that you load a big file over a slow network and you'll get your file minutes later.
+
+In most of case this are call asynchronous operation and different programming language deal with it with different method, most of them being *callback* and *interrupt* a way for computer to continue its operation once the result is available but without stalling the whole process.
+
+In javacript you can use the await and async keywords to tell "Ok, you gotta get your result later, once you got it, resume the programm here".
+
+Hence the previous syntax.
+
+### Loading
+
+Ok now implement it by using a special javascript function call **fetch** that handle everything under the hood. Juste note that you have to :
+
+- await for the file
+- await for the "res.json", wich decode the response and put it a the data variable
+
+```javascript
+    const _loadDialogTree = async function (pathToData) {
+        try {
+            let res = await fetch(pathToData);
+            let data =await  res.json();
+            return data;
+
+        } catch (error) {
+            // Whatever the error, return  something null
+            return null;
+        }
+    };
+
+
+```
+
+and modfy your runNewDialog method to update the UX :
+
+```javascript
+            // Load the dialogue tree
+            this.dialogTree = await _loadDialogTree(pathToDialogTree);
+            //Set the interface to the first talk
+
+            if (this.dialogTree) {
+                let t = this.dialogTree["talks"];
+
+                // Get the first one
+                let firstText = t[Object.keys(t)[0]];
+                // Display it
+                this.update(firstText.text, firstText.answer.map( el=>el.reply ));
+            };
+```
+
+If everything is ok, you should get the first speech of your file displayed into your interface :
+
+![dtr](./image/dtr.png)
+
 ##  Step 2 : add consequences to choice 
 
 There are 2 kind of consequences : 

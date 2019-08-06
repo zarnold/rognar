@@ -9,41 +9,8 @@ let level_1 = new Scenery("scene");
 
 level_1.scene = "./img/backgrounds/room/lba-room.jpg";
 
-let tree = [
-    {
-        speech : "The background with night effects", 
-        choices : ["Tell something", "tell another thing", "dont tell anything"]
-    },
-    {
-        speech : "Hallucination ensue !", 
-        choices : ["Oh my g**", "I'm on the run"]
-    },
-    {
-        speech : "Ouf evrything is back to normal", 
-        choices : ["Make a prayer", "scream", "Ask for help","Roll  over the Floor and laugh","Leave"]
-    },
-    {
-        speech : "Last choice", 
-        choices : ["dont do anything", "do anything"]
-    }
-]
-
-var i = 0;
-
-
 let Lba = new Character("character-card","lba"); 
 
-
-function newText() {
-    Homer.update(tree[i]["speech"], tree[i]["choices"]);
-
-    if( i < tree.length) {
-        i++;
-        setTimeout(newText, 2000);
-    }
-}
-
-newText();
 
 document.onkeypress = function (e) {
     e = e || window.event;
@@ -65,3 +32,11 @@ document.onkeypress = function (e) {
     if (e.key==="n") Lba.show();
 };
 
+async function play() {
+    await Homer.runNewDialog("../data/dialog_1.json");
+    console.log("Homer dialog tree is");
+    console.dir(Homer.dialogTree);
+
+}
+
+play();

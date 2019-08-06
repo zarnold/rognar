@@ -13,12 +13,19 @@ let Writer = (function () {
 
     // Convention is to use a lodash for private method
     // Expect the loading function to be asynchronous     
-    const _loadDialogTree = function(path) {
+    const _loadDialogTree = async function (pathToData) {
+        try {
+            let res = await fetch(pathToData);
+            let data =await  res.json();
+            return data;
 
-        return new Promise( function(res, rej) {
-            res(4);
-        });
-    }
+        } catch (error) {
+            // Whatever the error, return  something null
+            return null;
+        }
+    };
+
+
 
     class Writer {
 
@@ -93,7 +100,22 @@ let Writer = (function () {
 
             // Reset 
             this.alreadyReadChoices = [];
-            this.dialogTree = await _loadDialogTree(pathToDialogTree)
+
+            // Load the dialogue tree
+            this.dialogTree = await _loadDialogTree(pathToDialogTree);
+            //Set the interface to the first talk
+
+            if (this.dialogTree) {
+                let t = this.dialogTree["talks"];
+
+                // Get the first one
+                let firstText = t[Object.keys(t)[0]];
+                // Display it
+                this.update(firstText.text, firstText.answer.map( el=>el.reply ));
+            };
+
+            // Once done, return with a code 
+            // This code must indicate the issue of the dialog
             return 0;
         }
 
@@ -101,7 +123,7 @@ let Writer = (function () {
     }
 
 
-    return Writer
+    return Writer;
 })();
 
 export default Writer;
