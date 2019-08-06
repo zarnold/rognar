@@ -1,0 +1,46 @@
+{
+    "talks": {
+        "001": {
+            "text": "I'll make you an offer you can't refuse",
+            "answer": [
+                {
+                    "reply": "And what if I do THIS",
+                    "target": "010"
+                },
+                {
+                    "reply": "Oh. You think so ? let's see that",
+                    "target": "020"
+                },
+                {
+                    "reply": "Burn motherfucker",
+                    "target": "020"
+                }
+            ]
+        },
+        "010": {
+            "text": "Why so serious ? Let's put a smile on that face",
+            "answer": [
+                {
+                    "reply": "Eeerrrr... I'd rather try another way",
+                    "target": "001"
+                },
+                {
+                    "reply": "yeah. Sure. Let's do that",
+                    "target": "020"
+                }
+            ]
+        },
+        "020": {
+            "text": "Just imagine if you ever woke up strapped to an unidentifiable contraption, to static on a TV that morphs into the Jigsaws face? What would run through your mind?",
+            "answer": [
+                {
+                    "reply":"your heart stops",
+                    "target":"001"
+                },
+                {"reply":"it will be boring","target":"010"},
+                {"reply":"dunno","target":"001"},
+                {"reply":"your brain stops","target":"010"}
+            ]
+        }
+    }
+}

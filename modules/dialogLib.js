@@ -11,6 +11,13 @@ export default class Writer {
     constructor(dialogWindowId) {
         let target = document.getElementById(dialogWindowId);
         
+        // Properties 
+
+        this.dialogTree= {};
+        this.alreadyReadChoices=[];
+        this.currentTalk={};
+
+
         if(target) {
             this.target = target;
             
@@ -29,6 +36,13 @@ export default class Writer {
         } else {
             console.error("The dialog Window Id you provided is not available");
         }
+    }
+
+    loadDialogTree(url) {
+        // Load it the convenient way (read a file, a distant url, etc...)
+        this.dialogTree = url;
+        this.alreadyReadChoices=[];
+        
     }
 
 

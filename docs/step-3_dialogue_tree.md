@@ -182,8 +182,173 @@ let Homer = new Writer("dialog-window");
 let Joyce = new Writer("another-dialog");
 ```
 
-## Step 1 : Load real dialog tree and make it interactiv
+## Navigatin the dialog tree
 
-## Step 2 : reflect the player choice to the characteer sheet and the portrait mood
+We got a structure to change and display a dialog but that is not very interesting. What we really want is a tree inside whom we can navigate and whom user choices cahge the output. 
 
-## Step 3 : Add skill check 
+For building that, I rather focus on the structure needed to do that (the model ) instead of the way to do it. If my model is good, implementation will follow.
+
+Let's create a chapter_1.json file and fill it up.
+
+*So what is a dialog tree ?*
+
+it's a list of talks 
+
+```javascript
+{
+    "talks":[]
+}
+```
+
+*What is a talk ?*
+
+It's a descriptive text and a list of reply
+
+```javascript
+{
+    "talks":[
+        {
+            "text":"I'll make you an offer you can't refuse",
+            "answer" : [
+                "And what if I do THIS",
+                "Oh. You think so ? let's see that",
+                "Burn motherfucker"
+            ]
+        },
+        {
+            "text":"Why so serious ? Let's put a smile on that face",
+            "answer": [
+                "Eeerrrr... I'd rather try another way",
+                "yeah. Sure. Let's do that"
+            ]
+        },
+        {
+            "text":"Just imagine if you ever woke up strapped to an unidentifiable contraption, to static on a TV that morphs into the Jigsaws face? What would run through your mind?",
+            "answer":[
+                "your heart stops",
+                "it will be boring",
+                "dunno",
+                "your brain stops"
+            ]
+        }
+
+    ]
+}
+```
+
+*What happens when player makes a choice ?*
+
+Because it's a game, we wanna that a reply lead to another talks. Thus, we need to index each talks AND we need that each reply lead to another index.
+
+We could keep the array structure but it will be tedious for coder to keep trace of text index and orded when adding text to the dialog tree. I rather to use an associative array with keys that can be use as index.
+
+```javascript
+{
+    "talks": {
+        "001": {
+            "text": "I'll make you an offer you can't refuse",
+            "answer": [
+                {
+                    "reply": "And what if I do THIS",
+                    "target": "010"
+                },
+                {
+                    "reply": "Oh. You think so ? let's see that",
+                    "target": "020"
+                },
+                {
+                    "reply": "Burn motherfucker",
+                    "target": "020"
+                }
+            ]
+        },
+        "010": {
+            "text": "Why so serious ? Let's put a smile on that face",
+            "answer": [
+                {
+                    "reply": "Eeerrrr... I'd rather try another way",
+                    "target": "001"
+                },
+                {
+                    "reply": "yeah. Sure. Let's do that",
+                    "target": "020"
+                }
+            ]
+        },
+        "020": {
+            "text": "Just imagine if you ever woke up strapped to an unidentifiable contraption, to static on a TV that morphs into the Jigsaws face? What would run through your mind?",
+            "answer": [
+                {
+                    "reply": "your heart stops",
+                    "target": "001"
+                },
+                {
+                    "reply": "it will be boring",
+                    "target": "010"
+                },
+                {
+                    "reply": "dunno",
+                    "target": "001"
+                },
+                {
+                    "reply": "your brain stops",
+                    "target": "010"
+                }
+            ]
+        }
+    }
+}
+```
+
+Et voilà !
+
+The first thing to do next is to write a loading method for our writer :
+
+```javascript
+    loadDialogTree(url) {
+        // Load it the convenient way (read a file, a distant url, etc...)
+        this.dialogTree = url;
+        this.alreadyReadChoices=[];
+        
+    }
+```
+
+and of course, add a property to maintain the current choice :
+
+```javascript
+
+    this.dialogTree= {};
+    this.currentTalk={};
+
+```
+
+##  Step 2 : add consequences to choice 
+
+There are 2 kind of consequences : 
+
+- when the player enters a new choice
+- when the player choose a reply
+
+The dialog tree schema must allow to describe that. Moreover, I think it would be better if this consequence can be defined as occuring only once or each time the player enters the choice. It means that we must keep a list of already made choices :
+
+```javascript
+
+export default class Writer {
+
+    constructor(dialogWindowId) {
+        let target = document.getElementById(dialogWindowId);
+        
+        // Properties 
+
+        this.dialogTree= {};
+        this.alreadyReadChoices=[];
+        this.currentTalk={};
+
+
+
+```
+
+
+## Step 3 : add skillcheck
+
+As in most of good RPG, Some replies are displayed only when some conditions are met. We must find a way to describe this condition in our dialog tree file and parse them with the writer Class.
