@@ -5,6 +5,7 @@
  */
 
 "use strict";
+import Tracer from "./debug.js";
 
 // Code change to make method private but without sharing the scope 
 // Use immediately invocated function
@@ -16,7 +17,7 @@ let Writer = (function () {
     const _loadDialogTree = async function (pathToData) {
         try {
             let res = await fetch(pathToData);
-            let data =await  res.json();
+            let data = await res.json();
             return data;
 
         } catch (error) {
@@ -31,6 +32,10 @@ let Writer = (function () {
 
         constructor(dialogWindowId) {
             let target = document.getElementById(dialogWindowId);
+
+            this.dbg = new Tracer("Writer");
+            this.dbg.unmute();
+            this.dbg.info("Setting up new Writer");
 
             // Properties 
 
@@ -55,12 +60,20 @@ let Writer = (function () {
                 this.target.appendChild(playerChoiceContainer);
 
             } else {
-                console.error("The dialog Window Id you provided is not available");
+                this.dbg.error("The dialog Window Id you provided is not available");
             }
         }
 
 
-        update(speech, choices) {
+        update(dialogue) {
+
+
+            // If dialog is done, resume
+            if (dialogue.hasOwnProperty("issue")) {
+                this.endOfDialogEvent.result = dialogue["issue"];
+                this.target.dispatchEvent(this.endOfDialogEvent);            
+                return;
+            }
 
 
             // Get the Creature speech element and the player choice list
@@ -81,22 +94,65 @@ let Writer = (function () {
             // Then add the speech
             // do not forget to get the reference again as it has changed when cloning
             hdr = this.target.querySelector("#creature-speech");
-            newContent = document.createTextNode(speech);
+            newContent = document.createTextNode(dialogue.text);
             hdr.appendChild(newContent);
 
             chc = this.target.querySelector("#player-choice");
 
             // Add an li for each options
-            choices.forEach(function (el) {
+            dialogue.answer.forEach(function (el) {
+                // create as many list item as choice
                 let l = document.createElement('li');
-                newContent = document.createTextNode(el);
+                l.classList.add("player-choice");
+                // Create a text node with the reply text
+                newContent = document.createTextNode(el.reply);
+
+                // add a click listener on the answer 
+                // where you bind the target
+                // do not forget to pass the instance
+
+                l.addEventListener("click", function (target, referenceToElement) {
+                    let destination = this.dialogTree["talks"][target];
+
+                    // Clean your mess
+                    // especially the listener cause it can be
+                    // perfmonging
+                    
+                    referenceToElement.parentNode.removeChild(referenceToElement);
+                    if (destination) {
+                        this.update(destination);
+                    } else {
+                        console.error("The expected target does not exists");
+                    }
+
+
+                }.bind(this, el.target, l));
+
+                // and add it to the list item
                 l.appendChild(newContent);
+                // which is then add to the #player-choice element
                 chc.appendChild(l);
-            });
+            }.bind(this));
 
         }
 
+
         async runNewDialog(pathToDialogTree) {
+
+            // setup a new event for end of this dialogue         
+            this.endOfDialogEvent = new CustomEvent("issue");
+
+            // And then create a local promise that will resolve when event end of dialogue fired
+            // Problem with that is that a listener is created each time a new dialog is ran 
+            const dialogueIsDone = function () {
+                let listeningElement = this.target;
+
+                return new Promise(function (resolve) {
+                    listeningElement.addEventListener("issue", el => resolve(el.result), false);
+                });
+
+            }.bind(this);
+
 
             // Reset 
             this.alreadyReadChoices = [];
@@ -108,15 +164,30 @@ let Writer = (function () {
             if (this.dialogTree) {
                 let t = this.dialogTree["talks"];
 
-                // Get the first one
-                let firstText = t[Object.keys(t)[0]];
+                // Use a start key because
+                // you 're never sure of the order of the key
+                let firstText;
+                if (t.hasOwnProperty("START"))
+                    firstText = t["START"];
+                else
+                    console.error("There is no place for starting this dialogue");
+
                 // Display it
-                this.update(firstText.text, firstText.answer.map( el=>el.reply ));
+                this.update(firstText);
             };
 
-            // Once done, return with a code 
+            // Once done, return with a code or an object
             // This code must indicate the issue of the dialog
-            return 0;
+
+            let res = await dialogueIsDone();
+
+            // clean your mess
+            var myNode = document.getElementById("player-choice");
+            myNode.innerHTML = "";
+            myNode = document.getElementById("creature-speech");
+            myNode.innerHTML = "";
+
+            return res;
         }
 
 

@@ -430,6 +430,166 @@ If everything is ok, you should get the first speech of your file displayed into
 
 ![dtr](./image/dtr.png)
 
+## Moving into the dialog Tree till the end
+
+Now we want that when player make a choice, by clicking on it for example, the game moves into the dialog tree and if some issue is reached, the dialogue is resumed.
+
+First, add a key in one of the text to tell that this is an issue (call it "issue" for example) :
+
+```javascript
+        "999":{
+            "issue":"VICTORY"
+        }
+``` 
+
+We're gonna use an asynchronous function that resolve when a certain element is fired. This function will be created when we a new dialogue is created.
+
+```javascript
+            // setup a new event for end of this dialogue         
+            this.endOfDialogEvent = new CustomEvent("issue");
+
+            // And then create a local promise that will resolve when event end of dialogue fired
+            // Problem with that is that a listener is created each time a new dialog is ran 
+            const dialogueIsDone = function () {
+                let listeningElement = this.target;
+
+                return new Promise(function (resolve) {
+                    listeningElement.addEventListener("issue", el => resolve(el.result), false);
+                });
+
+            }.bind(this);
+
+```
+
+Of course, you have to await for it later in your runNewDialog function : 
+
+```javascript
+  async runNewDialog(pathToDialogTree) {
+
+            [...]
+   
+            let res = await dialogueIsDone();
+
+            // clean your mess
+            var myNode = document.getElementById("player-choice");
+            myNode.innerHTML = "";
+            myNode = document.getElementById("creature-speech");
+            myNode.innerHTML = "";
+
+            return res;
+        }
+```
+
+Now you can emit your custom event when dialogue reach an issue, emitting the issue result in the event :
+
+```javascript
+
+update(dialogue) {
+
+
+    // If dialog is done, resume
+    if (dialogue.hasOwnProperty("issue")) {
+        this.endOfDialogEvent.result = dialogue["issue"];
+        this.target.dispatchEvent(this.endOfDialogEvent);            
+        return;
+    }
+
+[...]
+
+```
+
+In order to reach the target of a player choice, you can add event listener for click on a choice when building the choice list :
+
+```javascript
+  // Add an li for each options
+            dialogue.answer.forEach(function (el) {
+                // create as many list item as choice
+                let l = document.createElement('li');
+                l.classList.add("player-choice");
+                // Create a text node with the reply text
+                newContent = document.createTextNode(el.reply);
+
+                // add a click listener on the answer 
+                // where you bind the target
+                // do not forget to pass the instance
+
+                l.addEventListener("click", function (target, referenceToElement) {
+                    let destination = this.dialogTree["talks"][target];
+
+                    // Clean your mess
+                    // especially the listener cause it can be
+                    // perfmonging
+                    
+                    referenceToElement.parentNode.removeChild(referenceToElement);
+                    if (destination) {
+                        this.update(destination);
+                    } else {
+                        this.dbg.error("The expected target does not exists");
+                    }
+
+
+                }.bind(this, el.target));
+
+```
+
+The listener listen to a "click" on the li and when this happens, it call a function and pass the answer target ("el.target") to an anonymous function by using a bind. 
+
+```javascript
+l.addEventListener("click", function (target, referenceToElement) {
+    let destination = this.dialogTree["talks"][target];
+}.bind(this, el.target));
+```
+
+Thus, after having clean a little bit, you can call an update with this target.
+
+```javascript
+if (destination) {
+    this.update(destination);
+}
+```
+You can test that it works by awaiting for the result in your main : 
+
+```javascript
+        {
+            "reply": "your brain stops",
+            "target": "999"
+        }
+    ]
+},
+"999":{
+    "issue":"VICTORY"
+},
+"998":{
+    "issue":"DEATH"
+}
+```
+
+
+```javascript
+async function play() {
+    let dialogueResult = await Homer.runNewDialog("../data/dialog_1.json");
+
+    if(dialogueResult == "VICTORY") {
+        Lba.mood="ANGRY";
+        level_1.nigthScope();
+    }
+
+    if(dialogueResult == "DEATH") {
+        Lba.mood="DIZZY";
+        level_1.hallucination();
+    }
+
+
+}
+
+play();
+```
+The code after the **await** should be executed once an issue has been reach in the dialog, result of this issue being return in the dailogResult variable.
+
+
+![death](./image/death.png)
+
+
 ##  Step 2 : add consequences to choice 
 
 There are 2 kind of consequences : 
@@ -455,7 +615,6 @@ export default class Writer {
 
 
 ```
-
 
 ## Step 3 : add skillcheck
 

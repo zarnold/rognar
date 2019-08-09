@@ -33,9 +33,17 @@ document.onkeypress = function (e) {
 };
 
 async function play() {
-    await Homer.runNewDialog("../data/dialog_1.json");
-    console.log("Homer dialog tree is");
-    console.dir(Homer.dialogTree);
+    let dialogueResult = await Homer.runNewDialog("../data/dialog_1.json");
+
+    if(dialogueResult == "VICTORY") {
+        Lba.mood="ANGRY";
+        level_1.nigthScope();
+    }
+
+    if(dialogueResult == "DEATH") {
+        Lba.mood="DIZZY";
+        level_1.hallucination();
+    }
 
 }
 

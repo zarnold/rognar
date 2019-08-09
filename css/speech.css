@@ -38,3 +38,12 @@
     font-weight: normal;
     margin: 5px 0;
   }
+
+.player-choice:hover {
+  color: #530a69;
+  cursor: pointer;
+}
+
+#creature-speech {
+  height:3em;
+}
