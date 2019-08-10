@@ -432,13 +432,13 @@ If everything is ok, you should get the first speech of your file displayed into
 
 ## Moving into the dialog Tree till the end
 
-Now we want that when player make a choice, by clicking on it for example, the game moves into the dialog tree and if some issue is reached, the dialogue is resumed.
+Now we want that when player make a choice, by clicking on it for example, the game moves into the dialog tree and if some outcome is reached, the dialogue is resumed.
 
-First, add a key in one of the text to tell that this is an issue (call it "issue" for example) :
+First, add a key in one of the text to tell that this is an outcome (call it "outcome" for example) :
 
 ```javascript
         "999":{
-            "issue":"VICTORY"
+            "outcome":"VICTORY"
         }
 ``` 
 
@@ -446,7 +446,7 @@ We're gonna use an asynchronous function that resolve when a certain element is 
 
 ```javascript
             // setup a new event for end of this dialogue         
-            this.endOfDialogEvent = new CustomEvent("issue");
+            this.endOfDialogEvent = new CustomEvent("outcome");
 
             // And then create a local promise that will resolve when event end of dialogue fired
             // Problem with that is that a listener is created each time a new dialog is ran 
@@ -454,7 +454,7 @@ We're gonna use an asynchronous function that resolve when a certain element is 
                 let listeningElement = this.target;
 
                 return new Promise(function (resolve) {
-                    listeningElement.addEventListener("issue", el => resolve(el.result), false);
+                    listeningElement.addEventListener("outcome", el => resolve(el.result), false);
                 });
 
             }.bind(this);
@@ -480,7 +480,7 @@ Of course, you have to await for it later in your runNewDialog function :
         }
 ```
 
-Now you can emit your custom event when dialogue reach an issue, emitting the issue result in the event :
+Now you can emit your custom event when dialogue reach an outcome, emitting the outcome result in the event :
 
 ```javascript
 
@@ -488,8 +488,8 @@ update(dialogue) {
 
 
     // If dialog is done, resume
-    if (dialogue.hasOwnProperty("issue")) {
-        this.endOfDialogEvent.result = dialogue["issue"];
+    if (dialogue.hasOwnProperty("outcome")) {
+        this.endOfDialogEvent.result = dialogue["outcome"];
         this.target.dispatchEvent(this.endOfDialogEvent);            
         return;
     }
@@ -557,10 +557,10 @@ You can test that it works by awaiting for the result in your main :
     ]
 },
 "999":{
-    "issue":"VICTORY"
+    "outcome":"VICTORY"
 },
 "998":{
-    "issue":"DEATH"
+    "outcome":"DEATH"
 }
 ```
 
@@ -584,7 +584,7 @@ async function play() {
 
 play();
 ```
-The code after the **await** should be executed once an issue has been reach in the dialog, result of this issue being return in the dailogResult variable.
+The code after the **await** should be executed once an outcome has been reach in the dialog, result of this outcome being return in the dailogResult variable.
 
 
 ![death](./image/death.png)

@@ -69,8 +69,8 @@ let Writer = (function () {
 
 
             // If dialog is done, resume
-            if (dialogue.hasOwnProperty("issue")) {
-                this.endOfDialogEvent.result = dialogue["issue"];
+            if (dialogue.hasOwnProperty("outcome")) {
+                this.endOfDialogEvent.result = dialogue["outcome"];
                 this.target.dispatchEvent(this.endOfDialogEvent);            
                 return;
             }
@@ -140,7 +140,7 @@ let Writer = (function () {
         async runNewDialog(pathToDialogTree) {
 
             // setup a new event for end of this dialogue         
-            this.endOfDialogEvent = new CustomEvent("issue");
+            this.endOfDialogEvent = new CustomEvent("outcome");
 
             // And then create a local promise that will resolve when event end of dialogue fired
             // Problem with that is that a listener is created each time a new dialog is ran 
@@ -148,7 +148,7 @@ let Writer = (function () {
                 let listeningElement = this.target;
 
                 return new Promise(function (resolve) {
-                    listeningElement.addEventListener("issue", el => resolve(el.result), false);
+                    listeningElement.addEventListener("outcome", el => resolve(el.result), false);
                 });
 
             }.bind(this);
@@ -177,7 +177,7 @@ let Writer = (function () {
             };
 
             // Once done, return with a code or an object
-            // This code must indicate the issue of the dialog
+            // This code must indicate the outcome of the dialog
 
             let res = await dialogueIsDone();
 

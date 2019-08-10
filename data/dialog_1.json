@@ -52,10 +52,10 @@
             ]
         },
         "999":{
-            "issue":"VICTORY"
+            "outcome":"VICTORY"
         },
         "998":{
-            "issue":"DEATH"
+            "outcome":"DEATH"
         }
     }
 }
