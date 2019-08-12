@@ -71,7 +71,7 @@ let Writer = (function () {
             // If dialog is done, resume
             if (dialogue.hasOwnProperty("outcome")) {
                 this.endOfDialogEvent.result = dialogue["outcome"];
-                this.target.dispatchEvent(this.endOfDialogEvent);            
+                this.target.dispatchEvent(this.endOfDialogEvent);
                 return;
             }
 
@@ -100,45 +100,49 @@ let Writer = (function () {
             chc = this.target.querySelector("#player-choice");
 
             // Add an li for each options
-            dialogue.answer.forEach(function (el) {
-                // create as many list item as choice
-                let l = document.createElement('li');
-                l.classList.add("player-choice");
-                // Create a text node with the reply text
-                newContent = document.createTextNode(el.reply);
+            this.dbg.display(dialogue, "Currently loaded dialogue");
 
-                // add a click listener on the answer 
-                // where you bind the target
-                // do not forget to pass the instance
+            if (dialogue.answer)
+                dialogue.answer.forEach(function (el) {
+                    // create as many list item as choice
+                    let l = document.createElement('li');
+                    l.classList.add("player-choice");
+                    // Create a text node with the reply text
+                    newContent = document.createTextNode(el.reply);
 
-                l.addEventListener("click", function (target, referenceToElement) {
-                    let destination = this.dialogTree["talks"][target];
+                    // add a click listener on the answer 
+                    // where you bind the target
+                    // do not forget to pass the instance
 
-                    // Clean your mess
-                    // especially the listener cause it can be
-                    // perfmonging
-                    
-                    referenceToElement.parentNode.removeChild(referenceToElement);
-                    if (destination) {
-                        this.update(destination);
-                    } else {
-                        console.error("The expected target does not exists");
-                    }
+                    l.addEventListener("click", function (target, referenceToElement) {
+                        let destination = this.dialogTree["talks"][target];
+
+                        // Clean your mess
+                        // especially the listener cause it can be
+                        // perfmonging
+
+                        referenceToElement.parentNode.removeChild(referenceToElement);
+                        if (destination) {
+                            this.update(destination);
+                        } else {
+                            console.error("The expected target does not exists");
+                        }
 
 
-                }.bind(this, el.target, l));
+                    }.bind(this, el.target, l));
 
-                // and add it to the list item
-                l.appendChild(newContent);
-                // which is then add to the #player-choice element
-                chc.appendChild(l);
-            }.bind(this));
+                    // and add it to the list item
+                    l.appendChild(newContent);
+                    // which is then add to the #player-choice element
+                    chc.appendChild(l);
+                }.bind(this));
 
         }
 
 
         async runNewDialog(pathToDialogTree) {
 
+            this.dbg.info(`New dialog : ${pathToDialogTree}`)
             // setup a new event for end of this dialogue         
             this.endOfDialogEvent = new CustomEvent("outcome");
 

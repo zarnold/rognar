@@ -619,3 +619,11 @@ export default class Writer {
 ## Step 3 : add skillcheck
 
 As in most of good RPG, Some replies are displayed only when some conditions are met. We must find a way to describe this condition in our dialog tree file and parse them with the writer Class.
+
+## Step 4 : add variable to the text to make them dynamic
+
+Example : use "Sir" if player is a boy, "miss" if she's a girl, "Mx" otherwise.
+
+## Step 5 : add different option of the text, depending on var
+
+Think of it as "tone", depending on the mood. Meaning is the same but lexical change.

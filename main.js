@@ -38,11 +38,33 @@ async function play() {
     if(dialogueResult == "VICTORY") {
         Lba.mood="ANGRY";
         level_1.nigthScope();
+        Homer.update({"text":"Victory !"});
     }
 
     if(dialogueResult == "DEATH") {
         Lba.mood="DIZZY";
         level_1.hallucination();
+        Homer.update({"text":"DEATH !"});
+    }
+
+
+    // Load another dialog
+    console.log('GO');
+    Lba.mood="NORMAL";
+    level_1.removeEffect();
+    console.log("New dialog");
+    dialogueResult = await Homer.runNewDialog("../data/dialog_2.json");
+
+    if(dialogueResult == "VICTORY") {
+        Lba.mood="ANGRY";
+        level_1.nigthScope();
+        Homer.update({"text":"Victory !"});
+    }
+
+    if(dialogueResult == "DEATH") {
+        Lba.mood="DIZZY";
+        level_1.hallucination();
+        Homer.update({"text":"DEATH !"});
     }
 
 }

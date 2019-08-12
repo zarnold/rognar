@@ -1,0 +1,91 @@
+{
+    "talks": {
+        "START": {
+            "text": "Bonjour. Bienvenue dans mon antre",
+            "answer": [
+                {
+                    "reply": "Bonjour. Je ne suis pas là pour perdre mon temps. Montre-moi tes possessions",
+                    "target": "angry_01"
+                },
+                {
+                    "reply": "Bonjour.",
+                    "target": "neutral_01"
+                },
+                {
+                    "reply": "Bonjour ! C'est très jolie par chez vous dites",
+                    "target": "happy_01"
+                }
+            ]
+        },
+        "angry_01": {
+            "text": "Du calme jeune homme",
+            "answer": [
+                {
+                    "reply": "Ce n'est pas à toi de décider de comment je cause",
+                    "target": "998"
+                },
+                {
+                    "reply": "Oui. excusez-moi",
+                    "target": "neutral_01"
+                }
+            ]
+        },
+        "neutral_01": {
+            "text": "Alors. Qu'est ce qui vous amène ici ? ",
+            "answer": [
+                {
+                    "reply": "Je suis là pour notre bien. Le votre le mien",
+                    "target": "happy_02"
+                },
+                {
+                    "reply":"Les affaires. Je cherche une femme",
+                    "target": "neutral_02"
+                }
+            ]
+        },
+        "happy_01": {
+            "text": "He bien. Ca fait plaisir de voir des gens comme vous",
+            "answer": [
+                {
+                    "reply": "Tu m'étonnes ducon. Tu dois pas voir grand monde dans ton bouiboui",
+                    "target": "angry_01"
+                },
+                {
+                    "reply": "Ha ! tant mieux, nous allons pouvoir discuter entre gens de bonne compagnie. Je suis à la recherche d'une amie",
+                    "target": "happy_02"
+                }
+            ]
+        },
+        "happy_02": {
+            "text": "Oui. Ca me rappelle la dame qui est passé hier. Elle était en route pour Hammamet",
+            "answer": [
+                {
+                    "reply": "Oh. Ca m'interesse. Merci",
+                    "target": "999"
+                }
+            ]
+        },
+        "neutral_02": {
+            "text": "Jamais vu. ",
+            "answer": [
+                {
+                    "reply": "Tu vas faire un effort Papy ou je vais m'énerver",
+                    "target": "angry_01"
+                },
+                {
+                    "reply": "Tant pis. Merci",
+                    "target": "997"
+                }
+            ]
+        },
+        "999": {
+            "outcome": "VICTORY"
+        },
+        "998": {
+            "outcome": "DEATH"
+        },
+        "997": {
+            "outcome": "BLANK"
+        }
+    }
+}
