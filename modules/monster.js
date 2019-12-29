@@ -22,7 +22,7 @@ export default class Monster {
 
     assignPortrait(portraitName) {
         this.portrait = new Character("character-card",portraitName); 
-        this.portrait.mood = "ANGRY";
+        this.portrait.mood = "NORMAL";
         this.portrait.focus = "right";
         this.portrait.show();
     }

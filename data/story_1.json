@@ -1,0 +1,87 @@
+{
+    "talks": {
+        "START": {
+            "text": "Bonjour. Est ce que je peux vous aider ?",
+            "answer": [
+                {
+                    "reply": "Oui je veux bien.",
+                    "target": "010"
+                },
+                {
+                    "reply": "Non, je n'ai pas besoin d'aide",
+                    "target": "020"
+                },
+                {
+                    "reply": "Non, vous ne savez pas comment faire.",
+                    "target": "030"
+                }
+            ]
+        },
+        "010": {
+            "text": "Ok. Que puis je faire pour vous ?",
+            "answer": [
+                {
+                    "reply": "M'aider à ranger car la maison est en bazar.",
+                    "target": "011"
+                },
+                {
+                    "reply": "Faire le lit",
+                    "target": "012"
+                }
+            ]
+        },
+        "011": {
+            "text": "Super ! J'adore ranger la maison !",
+            "answer": [
+                {
+                    "reply": "Et bien tant mieux. Je pense que nous allons devenir amis.",
+                    "target": "999"
+                }
+            ]
+        },
+        "012": {
+            "text": "Ha non ! Je déteste faire le lit",
+            "answer": [
+                {
+                    "reply": "Et bien va-t-en ! Patate !.",
+                    "target": "998"
+                }
+            ]
+        },
+        "020": {          
+            "text": "Oh. Tant pis. Au revoir",
+            "answer": [
+                {
+                    "reply": "A bientot.",
+                    "target": "997"
+                },
+                {
+                    "reply": "Au revoir",
+                    "target": "997"
+                }
+            ]
+        },
+        "030": {          
+            "text": "Ha oui ! Et bien vous pourriez être plus poli !",
+            "answer": [
+                {
+                    "reply": "Oui, excusez moi.",
+                    "target": "010"
+                },
+                {
+                    "reply": "He ho ! Je ne vous ai rien demandé après tout. Laissez moi",
+                    "target": "998"
+                }
+            ]
+        },
+        "999":{
+            "outcome":"GAGNE"
+        },
+        "998":{
+            "outcome":"PERDU"
+        },
+        "997":{
+            "outcome":"NEUTRE"
+        }
+    }
+}

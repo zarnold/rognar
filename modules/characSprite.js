@@ -53,6 +53,8 @@ export default class Character {
     }
 
     set mood(newMood) {
+        this.dbg.info("Setting mood");
+        this.dbg.display(newMood, "New mood is ");
         let moodIdx = moodValues[newMood];
 
         if (!moodIdx) moodIdx=0;
