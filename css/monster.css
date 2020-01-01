@@ -1,0 +1,26 @@
+#creature-skills {
+    background-color: gainsboro;
+    
+}
+
+#creature-skills ul{
+    list-style-type: none;
+    display:flex;
+    flex-direction: column;
+}
+
+#creature-skills ul>li{
+    flex:1;
+    display:flex;
+    flex-direction: row;
+}
+
+
+.skill-name {
+    flex:1;
+}
+
+.skill-meter {
+    border: 1px red solid;
+    flex:3;
+}

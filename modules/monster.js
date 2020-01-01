@@ -8,7 +8,8 @@
 import Character from "./characSprite.js";
 
 // You should pass an element to the monster so it can
-// displauy it charac
+// display its attributes
+
 export default class Monster {
     constructor(targetEl) {
         this.portrait = {};
@@ -34,7 +35,7 @@ export default class Monster {
             },
             "SHAME": {
                 displayText: "Shame",
-                value: 7,
+                value: 0,
             },
             "WEARINESS": {
                 displayText: "Weariness",
@@ -42,30 +43,49 @@ export default class Monster {
             },
         };
 
-
         const target = document.getElementById(targetEl);
 
         if (target) {
             this.displayItem = target;
-
+            this.displayItem.setAttribute("id", "creature-skills");
             //Use the semantic Description List tag
-            let skillList = document.createElement("dl");
-            skillList.setAttribute("id", "creature-speech");
+            let skillList = document.createElement("ul");
+            skillList.classList.add("skill-list");
 
             for (const [key, emotion] of Object.entries(this._emotionsScore)) {
 
                 if (!Object.is(emotion.displayText, undefined)) {
-                    let term = document.createElement("dt");
-                    let termName = document.createTextNode(emotion.displayText);
-                    term.appendChild(termName);
+                    let skill = document.createElement("li");
+
+                    let skillName = document.createElement("label");
+                    skillName.setAttribute("for", `${emotion.displayText}-meter`);
+                    skillName.appendChild(document.createTextNode(emotion.displayText));
+
+                    let skillValue = document.createElement("span");
+                    skillValue.innerHTML = emotion.value;
 
 
-                    let termDefinition = document.createElement("dd");
-                    let termDefinitionValue = document.createTextNode(Object.is(emotion.value, undefined) ? 0 : emotion.value);
-                    termDefinition.appendChild(termDefinitionValue);
+                    let skillMeter = document.createElement("meter");
+                    skillMeter.value = emotion.value;
+                    skillMeter.min = -10;
+                    skillMeter.max = 10;
+                    skillMeter.low = -8;
+                    skillMeter.high = 8;
+                    skillMeter.optimum = 0;
 
-                    skillList.appendChild(term);
-                    skillList.appendChild(termDefinition);
+
+                    skillName.classList.add("skill-name");
+                    skillMeter.classList.add("skill-meter");
+
+                    skill.appendChild(skillName);
+                    skill.appendChild(skillValue);
+                    skill.appendChild(skillMeter);
+
+                    skillList.appendChild(skill);
+
+                    // lonk the html element to set it later
+                    emotion["meter"] = skillMeter;
+                    emotion["displayValue"] = skillValue;
                 }
             }
 
@@ -83,6 +103,56 @@ export default class Monster {
         this.portrait.focus = "right";
         this.portrait.show();
     }
+
+    _setEmotion(emotion, value) {
+        // TODO :alert if an emotion reach its threshold
+        const newValue = value < -10 ? -10 :
+                         value > 10 ? 10 :
+                         value;
+
+        this._emotionsScore[emotion].value = newValue;
+        this._emotionsScore[emotion].meter.value = newValue;
+        this._emotionsScore[emotion].displayValue.innerHTML = newValue;
+    }
+    // A wrapper from setter to emotion name
+    set fear(newValue) {
+        this._setEmotion("FEAR",newValue)
+    }
+    get fear() {
+        return this._emotionsScore["FEAR"].value;
+    }
+    set anger(newValue) {
+        this._setEmotion("ANGER",newValue)
+    }
+    get anger() {
+        return this._emotionsScore["ANGER"].value;
+    }
+    set despair(newValue) {
+        this._setEmotion("DESPAIR",newValue)
+    }
+    get despair() {
+        return this._emotionsScore["DESPAIR"].value;
+    }
+    set sadness(newValue) {
+        this._setEmotion("SADNESS",newValue)
+    }
+    get sadness() {
+        return this._emotionsScore["SADNESS"].value;
+    }
+    set shame(newValue) {
+        this._setEmotion("SHAME",newValue)
+    }
+    get shame() {
+        return this._emotionsScore["SHAME"].value;
+    }
+    set weariness(newValue) {
+        this._setEmotion("WEARINESS",newValue)
+    }
+    get weariness() {
+        return this._emotionsScore["WEARINESS"].value;
+    }
+
+
 
 
 }
