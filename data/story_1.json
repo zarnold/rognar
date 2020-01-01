@@ -75,13 +75,13 @@
             ]
         },
         "999":{
-            "outcome":"GAGNE"
+            "outcome":"VICTORY"
         },
         "998":{
-            "outcome":"PERDU"
+            "outcome":"LOSS"
         },
         "997":{
-            "outcome":"NEUTRE"
+            "outcome":"NONE"
         }
     }
 }

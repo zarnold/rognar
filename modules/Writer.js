@@ -4,6 +4,12 @@
  * A Lib for managing Speech
  */
 
+
+// TODO
+// Add a rewind method
+// Add a restart method
+// Add a history log
+
 "use strict";
 import Tracer from "./debug.js";
 
@@ -67,6 +73,7 @@ let Writer = (function () {
 
         update(dialogue) {
 
+            // FIXME : we use an event system but this could/ should have been a callback
 
             // If dialog is done, resume
             if (dialogue.hasOwnProperty("outcome")) {
