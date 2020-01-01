@@ -19,8 +19,9 @@ let level_1 = new Scenery("scene");
 level_1.scene = "./img/backgrounds/room/lba-room.jpg";
 
 // Put the opponent
-let opponent = new Monster();
+let opponent = new Monster("status-list");
 opponent.assignPortrait("child_1");
+
 
 
 // And now launch a daialog that resolve  the promise
