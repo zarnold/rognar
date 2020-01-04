@@ -11,6 +11,7 @@
 // Add a history log
 
 "use strict";
+import game from "./Game.js";
 import Tracer from "./debug.js";
 
 // Code change to make method private but without sharing the scope 
@@ -42,7 +43,8 @@ let Writer = (function () {
             this.dbg = new Tracer("Writer");
             this.dbg.unmute();
             this.dbg.info("Setting up new Writer");
-
+            
+            this.game = {};
             // Properties 
 
             this.dialogTree = {};
@@ -71,6 +73,18 @@ let Writer = (function () {
         }
 
 
+        _applyEffectToOpponent() {
+
+            // A very simple  atm
+            if(this.game) {
+                this.game.opponent.anger+=2;
+            }
+        }
+        
+        registerGame() {
+            this.game = game.getInstance();
+        }
+        
         update(dialogue) {
 
             // FIXME : we use an event system but this could/ should have been a callback
@@ -124,6 +138,8 @@ let Writer = (function () {
                     l.addEventListener("click", function (target, referenceToElement) {
                         let destination = this.dialogTree["talks"][target];
 
+                        // Apply effect
+                        this._applyEffectToOpponent();
                         // Clean your mess
                         // especially the listener cause it can be
                         // perfmonging

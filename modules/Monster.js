@@ -6,13 +6,14 @@
 "use strict";
 
 import Character from "./characSprite.js";
-
+import game from "./Game.js";
 // You should pass an element to the monster so it can
 // display its attributes
 
 export default class Monster {
     constructor(targetEl) {
         this.portrait = {};
+
 
         // TODO add i18n
         // TODO : let custom the emotions/ skills
@@ -97,6 +98,10 @@ export default class Monster {
         }
     }
 
+    registerGame() {
+        this.game = game.getInstance();
+    }
+    
     assignPortrait(portraitName) {
         this.portrait = new Character("character-card", portraitName);
         this.portrait.mood = "NORMAL";
@@ -113,6 +118,8 @@ export default class Monster {
         this._emotionsScore[emotion].value = newValue;
         this._emotionsScore[emotion].meter.value = newValue;
         this._emotionsScore[emotion].displayValue.innerHTML = newValue;
+
+
     }
     // A wrapper from setter to emotion name
     set fear(newValue) {
@@ -123,6 +130,9 @@ export default class Monster {
     }
     set anger(newValue) {
         this._setEmotion("ANGER",newValue)
+        if ( this._emotionsScore["ANGER"].value > 2 ) {
+            this.game.scenery.nigthScope();
+        }
     }
     get anger() {
         return this._emotionsScore["ANGER"].value;

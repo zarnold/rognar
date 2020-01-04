@@ -3,49 +3,45 @@
 import Writer from "./modules/Writer.js";
 import Scenery from "./modules/Scenery.js";
 import Monster from "./modules/Monster.js";
+import game from "./modules/Game.js";
 import Tracer from "./modules/debug.js";
 
 
 
 let logger = new Tracer("main");
 
-// Set up a new party : example
-// TODO : load this from a config file
-// Assign a writer for the game
-let Homer = new Writer("dialog-window");
 
-// Assign a scenery and set it up
-let level_1 = new Scenery("scene");
-level_1.scene = "./img/backgrounds/room/lba-room.jpg";
+// Kinda mediator pattern 
+// where currentGame serve as a common shared State
+// it works but it forces developper to register his/her game
+// and it creates a strong coupling because each modules
+// Must implement a registerGame method
 
-// Put the opponent
-let opponent = new Monster("status-list");
-opponent.assignPortrait("child_1");
+const currentGame = game.createInstance({
+    dialog: new Writer("dialog-window"),
+    scenery: new Scenery("scene"),
+    opponent: new Monster("monster-1"),
+});
 
-// Test, set some attributes
-opponent.fear =1;
-opponent.anger = 2;
-opponent.despair=3;
-opponent.sadness=3;
-// Note that it works this <ay too thx to getter / setter
-opponent.shame +=2;
+currentGame.dialog.registerGame();
+currentGame.scenery.registerGame();
+currentGame.opponent.registerGame();
+currentGame.scenery.scene = "./img/backgrounds/room/lba-room.jpg";
+currentGame.opponent.assignPortrait("child_1");
 
 // And now launch a daialog that resolve  the promise
 // Could have been an await too
-Homer
+currentGame.dialog
     .runNewDialog("../data/story_1.json")
     .then(function (dialogResult) {
         // Do something with your dialog result
         if(dialogResult == "VICTORY") {
-            Homer.update({text:"You won"}); 
-            opponent.despair=-9;
-            opponent.sadness=-9;
+            currentGame.dialog.update({text:"You won"}); 
         } else {
-            Homer.update({text:"Game done"}); 
-            opponent.despair=-9;
+            currentGame.dialog.update({text:"Game done"}); 
         }
     })
     .catch(function (error) {
-        Homer.update({text:"Some error happened while running this dialog tree"});
+        currentGame.dialog.update({text:"Some error happened while running this dialog tree"});
         logger.display(error);
     });

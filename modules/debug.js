@@ -3,7 +3,7 @@
  * @module debug.js
  * A Class for logging and debugging
  */
-const DEBUG_MODE = true;
+const DEBUG_MODE = false;
 
 export default class Tracer {
 

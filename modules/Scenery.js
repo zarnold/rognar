@@ -6,6 +6,7 @@
 
 "use strict";
 import Tracer from "./debug.js";
+import game from "./Game.js";
 
 export default class Scenery {
 
@@ -15,6 +16,8 @@ export default class Scenery {
         this.dbg = new Tracer("Background");
         this.dbg.unmute();
         this.dbg.info("Creating a new background");
+            
+        this.game = {};
 
         let parent = document.getElementById(targetEl);
 
@@ -51,6 +54,12 @@ export default class Scenery {
     get scene() {
         return this._scene;
     }
+
+
+    registerGame() {
+        this.game = game.getInstance();
+    }
+        
 
     removeEffect() {
         this.dbg.info("remove all effects");        
